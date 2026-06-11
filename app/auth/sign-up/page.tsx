@@ -1,14 +1,15 @@
 import Link from 'next/link';
 
 import { signUpAction } from '@/app/actions/auth';
-import { appConfig, freeMonthlyCredits } from '@/lib/config';
+import { Logo } from '@/components/logo';
+import { freeMonthlyCredits } from '@/lib/config';
 
 export default function SignUpPage({ searchParams }: { searchParams: { error?: string } }) {
   return (
     <main className="flex min-h-screen items-center justify-center bg-fog px-6 py-12 text-ink">
       <div className="w-full max-w-md rounded-lg border border-slate-200 bg-white p-8 shadow-lift">
-        <Link href="/" className="text-lg font-semibold">
-          {appConfig.name}
+        <Link href="/">
+          <Logo />
         </Link>
         <h1 className="mt-8 text-3xl font-semibold">Create your account</h1>
         <p className="mt-2 text-slate-600">Start with {freeMonthlyCredits} free generations each month.</p>

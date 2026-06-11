@@ -1,14 +1,14 @@
 import Link from 'next/link';
 
 import { signInAction } from '@/app/actions/auth';
-import { appConfig } from '@/lib/config';
+import { Logo } from '@/components/logo';
 
 export default function SignInPage({ searchParams }: { searchParams: { error?: string; message?: string; next?: string } }) {
   return (
     <main className="flex min-h-screen items-center justify-center bg-fog px-6 py-12 text-ink">
       <div className="w-full max-w-md rounded-lg border border-slate-200 bg-white p-8 shadow-lift">
-        <Link href="/" className="text-lg font-semibold">
-          {appConfig.name}
+        <Link href="/">
+          <Logo />
         </Link>
         <h1 className="mt-8 text-3xl font-semibold">Sign in</h1>
         <p className="mt-2 text-slate-600">Access your credits, product generations, Brand DNA, and billing.</p>

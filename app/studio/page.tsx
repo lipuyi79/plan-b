@@ -1,7 +1,8 @@
 import Link from 'next/link';
 
 import { ProductStudio } from '@/components/product-studio';
-import { appConfig, freeMonthlyCredits } from '@/lib/config';
+import { Logo } from '@/components/logo';
+import { freeMonthlyCredits } from '@/lib/config';
 import { requireUser } from '@/lib/dashboard';
 
 export default async function StudioPage() {

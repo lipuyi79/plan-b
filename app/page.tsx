@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { ArrowRight, ImagePlus, Layers, Sparkles } from 'lucide-react';
 
-import { appConfig, pricingPlans } from '@/lib/config';
+import { Logo } from '@/components/logo';
+import { pricingPlans } from '@/lib/config';
 
 const pillars = [
   {
@@ -25,8 +26,8 @@ export default function HomePage() {
   return (
     <main className="min-h-screen bg-fog text-ink">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-        <Link href="/" className="text-lg font-semibold tracking-tight">
-          {appConfig.name}
+        <Link href="/" className="tracking-tight">
+          <Logo />
         </Link>
         <div className="flex items-center gap-3">
           <Link href="/pricing" className="text-sm font-medium text-slate-700">

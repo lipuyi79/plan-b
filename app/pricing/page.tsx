@@ -1,14 +1,15 @@
 import Link from 'next/link';
 
 import { CheckoutButton } from '@/components/checkout-button';
-import { appConfig, freeMonthlyCredits, pricingPlans } from '@/lib/config';
+import { Logo } from '@/components/logo';
+import { freeMonthlyCredits, pricingPlans } from '@/lib/config';
 
 export default function PricingPage() {
   return (
     <main className="min-h-screen bg-fog text-ink">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-        <Link href="/" className="text-lg font-semibold tracking-tight">
-          {appConfig.name}
+        <Link href="/" className="tracking-tight">
+          <Logo />
         </Link>
         <Link href="/studio" className="rounded-md bg-ink px-4 py-2 text-sm font-semibold text-white">
           Open Studio
