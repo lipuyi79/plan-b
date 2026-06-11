@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { Loader2, UploadCloud } from 'lucide-react';
+import { Download, Loader2, UploadCloud } from 'lucide-react';
 
 import { brandStyles, seedPool } from '@/lib/config';
 
@@ -10,6 +10,7 @@ const marketplaces = ['shopify', 'amazon', 'etsy', 'dtc'] as const;
 export function ProductStudio() {
   const [productDataUrl, setProductDataUrl] = useState<string>('');
   const [backgroundUrl, setBackgroundUrl] = useState<string>('');
+  const [generationId, setGenerationId] = useState<string>('');
   const [productType, setProductType] = useState('ceramic mug');
   const [scene, setScene] = useState('premium kitchen countertop with soft morning window light');
   const [brandStyle, setBrandStyle] = useState('luxury-minimal');
@@ -17,6 +18,8 @@ export function ProductStudio() {
   const [marketplace, setMarketplace] = useState<(typeof marketplaces)[number]>('shopify');
   const [reflection, setReflection] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isRecordingDownload, setIsRecordingDownload] = useState(false);
+  const [downloadMessage, setDownloadMessage] = useState('');
   const [error, setError] = useState('');
   const selectedStyle = useMemo(
     () => brandStyles.find((style) => style.id === brandStyle) ?? brandStyles[0],
@@ -31,6 +34,7 @@ export function ProductStudio() {
 
   async function generateBackground() {
     setError('');
+    setDownloadMessage('');
     setIsGenerating(true);
 
     try {
@@ -55,10 +59,38 @@ export function ProductStudio() {
       }
 
       setBackgroundUrl(result.imageUrl);
+      setGenerationId(result.generationId ?? '');
     } catch (generationError) {
       setError(generationError instanceof Error ? generationError.message : 'Generation failed.');
     } finally {
       setIsGenerating(false);
+    }
+  }
+
+  async function recordDownload() {
+    if (!backgroundUrl) return;
+
+    setIsRecordingDownload(true);
+    setDownloadMessage('');
+
+    try {
+      const response = await fetch('/api/downloads/record', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ generationId, fileUrl: backgroundUrl }),
+      });
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error ?? 'Could not record download.');
+      }
+
+      setDownloadMessage('Download recorded in your dashboard.');
+      window.open(backgroundUrl, '_blank', 'noopener,noreferrer');
+    } catch (downloadError) {
+      setError(downloadError instanceof Error ? downloadError.message : 'Could not record download.');
+    } finally {
+      setIsRecordingDownload(false);
     }
   }
 
@@ -172,11 +204,12 @@ export function ProductStudio() {
           </button>
 
           {error ? <p className="rounded-md bg-red-50 p-3 text-sm text-red-700">{error}</p> : null}
+          {downloadMessage ? <p className="rounded-md bg-emerald-50 p-3 text-sm text-emerald-700">{downloadMessage}</p> : null}
         </div>
       </section>
 
       <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-        <div className="mb-4 flex items-center justify-between">
+        <div className="mb-4 flex items-center justify-between gap-3">
           <div>
             <h2 className="text-xl font-semibold">Locked product composite</h2>
             <p className="text-sm text-slate-600">Background changes. Product pixels stay untouched.</p>
@@ -214,6 +247,18 @@ export function ProductStudio() {
             </div>
           )}
         </div>
+
+        {backgroundUrl ? (
+          <button
+            type="button"
+            onClick={() => void recordDownload()}
+            disabled={isRecordingDownload}
+            className="mt-4 flex w-full items-center justify-center gap-2 rounded-md bg-ink px-4 py-3 font-semibold text-white disabled:opacity-60"
+          >
+            {isRecordingDownload ? <Loader2 className="animate-spin" size={18} /> : <Download size={18} />}
+            Download and record
+          </button>
+        ) : null}
 
         <div className="mt-5 grid gap-3 md:grid-cols-3">
           <div className="rounded-md bg-slate-50 p-4">

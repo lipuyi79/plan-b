@@ -6,7 +6,7 @@ export function getPlan(planId: string) {
   return pricingPlans.find((plan) => plan.id === planId);
 }
 
-export async function createCreemCheckout(planId: string) {
+export async function createCreemCheckout(planId: string, userId: string, userEmail?: string) {
   const plan = getPlan(planId);
 
   if (!plan) {
@@ -32,12 +32,14 @@ export async function createCreemCheckout(planId: string) {
       amount: plan.price * 100,
       currency: 'USD',
       interval: 'month',
+      customer_email: userEmail,
       metadata: {
+        userId,
         planId: plan.id,
         credits: plan.credits,
       },
-      success_url: `${appUrl}/studio?checkout=success&plan=${plan.id}`,
-      cancel_url: `${appUrl}/pricing?checkout=cancelled`,
+      success_url: `${appUrl}/dashboard/billing?checkout=success&plan=${plan.id}`,
+      cancel_url: `${appUrl}/dashboard/billing?checkout=cancelled`,
     }),
   });
 

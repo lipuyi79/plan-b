@@ -32,11 +32,14 @@ export default function HomePage() {
           <Link href="/pricing" className="text-sm font-medium text-slate-700">
             Pricing
           </Link>
+          <Link href="/auth/sign-in" className="text-sm font-medium text-slate-700">
+            Sign in
+          </Link>
           <Link
-            href="/studio"
+            href="/dashboard"
             className="inline-flex items-center gap-2 rounded-md bg-ink px-4 py-2 text-sm font-semibold text-white"
           >
-            Open Studio <ArrowRight size={16} />
+            Dashboard <ArrowRight size={16} />
           </Link>
         </div>
       </nav>

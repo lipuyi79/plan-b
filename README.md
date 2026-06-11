@@ -42,13 +42,16 @@ FAL_MODEL="fal-ai/flux/dev"
 CREEM_API_KEY="..."
 NEXT_PUBLIC_SUPABASE_URL="https://nkgwkmfbfjjpcrugufhx.supabase.co"
 NEXT_PUBLIC_SUPABASE_ANON_KEY="..."
+SUPABASE_SERVICE_ROLE_KEY="..."
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
 ```
 
 ## Pages
 
 - `/` landing page
-- `/studio` product image studio
+- `/auth/sign-in` and `/auth/sign-up` Supabase Auth pages
+- `/dashboard` user center with plan, credits, history, Brand DNA, downloads, and billing
+- `/studio` protected product image studio
 - `/pricing` Creem subscription plans
 
 ## API routes
@@ -68,7 +71,7 @@ NEXT_PUBLIC_APP_URL="http://localhost:3000"
 
 ## Next production steps
 
-- Create Supabase tables for accounts, generations, brand profiles, credits, and subscriptions.
+- Run `supabase/migrations/202606100001_user_center.sql` in Supabase SQL Editor before using the user center.
 - Store uploaded original product images and generated backgrounds in Supabase Storage.
 - Verify Creem's live checkout and webhook schemas, then add webhook signature validation.
 - Add server-side compositing with Sharp so exported images include product, shadow, and reflection as one final PNG/JPEG.
