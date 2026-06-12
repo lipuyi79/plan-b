@@ -25,7 +25,7 @@ export async function createCreemCheckout(planId: string, userId: string, userEm
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${apiKey}`,
+      'x-api-key': apiKey,
     },
     body: JSON.stringify({
       product_name: `${plan.name} monthly subscription`,
