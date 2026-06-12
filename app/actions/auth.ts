@@ -29,7 +29,7 @@ export async function signUpAction(formData: FormData) {
     email,
     password,
     options: {
-      emailRedirectTo: `${appUrl}/auth/callback?next=/dashboard`,
+      emailRedirectTo: `${appUrl}/auth/callback`
     },
   });
 
