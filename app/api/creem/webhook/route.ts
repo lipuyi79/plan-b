@@ -27,7 +27,7 @@ export async function POST(request: Request) {
 
     const supabase = createSupabaseAdminClient();
 
-    await supabase.from('credit_ledger').insert({
+    const { error: ledgerError } = await supabase.from('credit_ledger').insert({
       user_id: userId,
       delta: credits,
       reason: `creem_${plan.id}_subscription`,
@@ -35,13 +35,23 @@ export async function POST(request: Request) {
       metadata: payload,
     });
 
-    const { data: current } = await supabase
+    if (ledgerError) {
+      console.error('Creem webhook: failed to write credit_ledger', ledgerError);
+      return NextResponse.json({ error: ledgerError.message }, { status: 500 });
+    }
+
+    const { data: current, error: readError } = await supabase
       .from('account_summaries')
       .select('credits_balance')
       .eq('user_id', userId)
       .maybeSingle();
 
-    await supabase.from('account_summaries').upsert({
+    if (readError) {
+      console.error('Creem webhook: failed to read account_summaries', readError);
+      return NextResponse.json({ error: readError.message }, { status: 500 });
+    }
+
+    const { error: upsertError } = await supabase.from('account_summaries').upsert({
       user_id: userId,
       plan_id: plan.id,
       status: 'active',
@@ -50,6 +60,11 @@ export async function POST(request: Request) {
       creem_subscription_id: payload.subscription?.id ?? payload.data?.subscription?.id ?? null,
       current_period_end: payload.current_period_end ?? payload.data?.current_period_end ?? null,
     });
+
+    if (upsertError) {
+      console.error('Creem webhook: failed to upsert account_summaries', upsertError);
+      return NextResponse.json({ error: upsertError.message }, { status: 500 });
+    }
 
     return NextResponse.json({ received: true });
   } catch (error) {

@@ -12,14 +12,18 @@ export function createSupabaseServerClient() {
 
   return createServerClient(url, anonKey, {
     cookies: {
-      get(name: string) {
-        return cookieStore.get(name)?.value;
+      getAll() {
+        return cookieStore.getAll();
       },
-      set(name: string, value: string, options) {
-        cookieStore.set({ name, value, ...options });
-      },
-      remove(name: string, options) {
-        cookieStore.set({ name, value: '', ...options });
+      setAll(cookiesToSet) {
+        try {
+          cookiesToSet.forEach(({ name, value, options }) => {
+            cookieStore.set(name, value, options);
+          });
+        } catch {
+          // The `setAll` method was called from a Server Component.
+          // This can be ignored if middleware refreshes user sessions.
+        }
       },
     },
   });
@@ -35,11 +39,10 @@ export function createSupabaseAdminClient() {
 
   return createServerClient(url, serviceRoleKey, {
     cookies: {
-      get() {
-        return undefined;
+      getAll() {
+        return [];
       },
-      set() {},
-      remove() {},
+      setAll() {},
     },
   });
 }
