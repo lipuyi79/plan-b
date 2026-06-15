@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { ArrowRight, ImagePlus, Layers, Sparkles } from 'lucide-react';
 
 import { Logo } from '@/components/logo';
+import { SiteFooter } from '@/components/site-footer';
 import { pricingPlans } from '@/lib/config';
 
 const pillars = [
@@ -106,6 +107,8 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      <SiteFooter />
     </main>
   );
 }

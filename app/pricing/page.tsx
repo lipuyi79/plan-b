@@ -2,6 +2,7 @@ import Link from 'next/link';
 
 import { CheckoutButton } from '@/components/checkout-button';
 import { Logo } from '@/components/logo';
+import { SiteFooter } from '@/components/site-footer';
 import { freeMonthlyCredits, pricingPlans } from '@/lib/config';
 
 export default function PricingPage() {
@@ -49,6 +50,8 @@ export default function PricingPage() {
           ))}
         </div>
       </section>
+
+      <SiteFooter />
     </main>
   );
 }

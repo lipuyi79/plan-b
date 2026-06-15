@@ -6,6 +6,54 @@ export const appConfig = {
   url: process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000',
 };
 
+/**
+ * Legal / compliance metadata shared across the Terms, Privacy, Refund, and
+ * Disclaimer pages. Centralized so the operator name, contact address, and
+ * effective date stay consistent everywhere (and are easy to update for KYC /
+ * payment-processor review).
+ */
+export const legalConfig = {
+  /** Public-facing operator name. Update if you incorporate a legal entity. */
+  entity: 'ProductFrame AI',
+  /** Where legal / privacy / refund inquiries are sent. */
+  contactEmail: '15018647951@163.com',
+  /** Short, non-address operator location shown in the footer. */
+  region: 'Operated remotely · United States',
+  /**
+   * Effective date shown at the top of each policy. Bump this string whenever
+   * you materially change any policy so the version is auditable.
+   */
+  effectiveDate: 'June 15, 2026',
+  /** Governing-law summary used in Terms. US-first with GDPR accommodations. */
+  governingLaw: 'the State of Delaware, United States',
+};
+
+/** Legal pages exposed in the footer (and reused by payment-processor review). */
+export const legalLinks = [
+  { href: '/terms', label: 'Terms of Service' },
+  { href: '/privacy', label: 'Privacy Policy' },
+  { href: '/refund', label: 'Refund Policy' },
+  { href: '/disclaimer', label: 'Disclaimer' },
+  { href: '/cookies', label: 'Cookie Policy' },
+] as const;
+
+/** Company / informational pages exposed in the footer. */
+export const companyLinks = [
+  { href: '/about', label: 'About' },
+  { href: '/contact', label: 'Contact' },
+] as const;
+
+/**
+ * Social profiles shown in the footer. `href: ''` is treated as "not set yet"
+ * and is hidden — fill in the real URL to make the icon appear. `icon` is a
+ * lucide-react icon name resolved in the footer.
+ */
+export const socialLinks = [
+  { label: 'X (Twitter)', href: 'https://x.com/lpy520ow', icon: 'twitter' },
+  { label: 'LinkedIn', href: '', icon: 'linkedin' },
+  { label: 'Instagram', href: '', icon: 'instagram' },
+] as const;
+
 export const brandStyles = [
   {
     id: 'luxury-minimal',
