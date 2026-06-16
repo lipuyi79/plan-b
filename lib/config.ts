@@ -40,6 +40,7 @@ export const legalLinks = [
 /** Company / informational pages exposed in the footer. */
 export const companyLinks = [
   { href: '/about', label: 'About' },
+  { href: '/faq', label: 'FAQ' },
   { href: '/contact', label: 'Contact' },
 ] as const;
 
