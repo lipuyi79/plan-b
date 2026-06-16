@@ -34,6 +34,9 @@ export default function HomePage() {
           <Link href="/pricing" className="text-sm font-medium text-slate-700">
             Pricing
           </Link>
+          <Link href="/faq" className="text-sm font-medium text-slate-700">
+            FAQ
+          </Link>
           <Link href="/auth/sign-in" className="text-sm font-medium text-slate-700">
             Sign in
           </Link>
