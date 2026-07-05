@@ -24,7 +24,10 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   verification: {
-    google: 'rFs_FAy3rQMZVq_xifeTc9OO82kYC9QUV1u24DWhVjo',
+    google: [
+      'rFs_FAy3rQMZVq_xifeTc9OO82kYC9QUV1u24DWhVjo',
+      'ZiPkiQer5lXvhORnynJbjocO1wRfP5_846-eVohX0s4',
+    ],
   },
   openGraph: {
     type: 'website',
