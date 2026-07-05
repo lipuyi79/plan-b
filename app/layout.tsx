@@ -28,6 +28,9 @@ export const metadata: Metadata = {
       'rFs_FAy3rQMZVq_xifeTc9OO82kYC9QUV1u24DWhVjo',
       'ZiPkiQer5lXvhORnynJbjocO1wRfP5_846-eVohX0s4',
     ],
+    other: {
+      'msvalidate.01': '1618E00D33D93F4EBCB0A8012101067B',
+    },
   },
   openGraph: {
     type: 'website',
